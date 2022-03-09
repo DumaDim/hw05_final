@@ -12,7 +12,7 @@ class PostURLTests(TestCase):
     def setUpClass(cls):
         cls.user = User.objects.create(username='Name')
         super().setUpClass()
-        Group.objects.create(
+        cls.group = Group.objects.create(
             title='Тестовый заголовок',
             description='Тестовый текст',
             slug='test-slug'
@@ -39,12 +39,12 @@ class PostURLTests(TestCase):
         self.assertTemplateUsed(response, 'posts/index.html')
 
     def test_group_list_url_exists_at_desired_location(self):
-        response = self.guest_client.get('/group/test-slug/')
+        response = self.guest_client.get(f'/group/{self.group.slug}/')
         self.assertTemplateUsed(response, 'posts/group_list.html')
 
     def test_profile_url_exists_at_desired_location(self):
         """Страница /profile/<username>/ доступна любому пользователю."""
-        response = self.guest_client.get('/profile/NoName/')
+        response = self.guest_client.get(f'/profile/{self.user.username}/')
         self.assertTemplateUsed(response, 'posts/profile.html')
 
     def test_post_detail_url_exists_at_desired_location(self):
@@ -75,8 +75,8 @@ class PostURLTests(TestCase):
         """URL-адрес использует соответствующий шаблон."""
         templates_url_names = {
             'posts/index.html': '/',
-            'posts/group_list.html': '/group/test-slug/',
-            'posts/profile.html': '/profile/NoName/',
+            'posts/group_list.html': f'/group/{self.group.slug}/',
+            'posts/profile.html': f'/profile/{self.user.username}/',
             'posts/post_detail.html': f'/posts/{self.post.id}/',
             'posts/create_post.html': '/create/'
         }

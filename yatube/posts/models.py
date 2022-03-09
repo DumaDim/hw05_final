@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.db.models.constraints import UniqueConstraint
 
 User = get_user_model()
 Group = ''
@@ -84,3 +85,6 @@ class Follow(models.Model):
         on_delete=models.CASCADE,
         related_name='following'
     )
+
+    class Meta:
+        UniqueConstraint(fields=['user', 'author'], name='unique_follower')

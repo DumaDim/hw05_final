@@ -2,7 +2,6 @@ from django.urls import reverse
 from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from django import forms
-from django.core.cache import cache
 
 from ..models import Post, Comment
 
@@ -173,40 +172,3 @@ class PostPagesTests(TestCase):
                 text='Текст комментария'
             ).exists()
         )
-
-
-class CacheViewsTests(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        super().setUpClass()
-        cls.user = User.objects.create_user(username='auth')
-        cls.group = Group.objects.create(
-            title='Тестовая группа',
-            slug='test-slug',
-            description='Тестовое описание',
-        )
-        cls.post = Post.objects.create(
-            author=cls.user,
-            text='Тестовый текст'
-        )
-
-    def setUp(self):
-        self.guest_client = Client()
-        self.authorized_client = Client()
-        self.authorized_client.force_login(self.user)
-
-    def test_cache_index(self):
-        """Проверка хранения и очищения кэша для index."""
-        response = self.authorized_client.get(reverse('posts:index'))
-        posts = response.content
-        response_old = self.authorized_client.get(
-            reverse('posts:index')
-        )
-        old_posts = response_old.content
-        self.assertTrue(
-            old_posts,
-            posts)
-        cache.clear()
-        response_new = self.authorized_client.get(reverse('posts:index'))
-        new_posts = response_new.content
-        self.assertTrue(old_posts, new_posts)
