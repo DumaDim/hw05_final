@@ -145,9 +145,9 @@ dmypy.json
 
 .mypy_cache
 
-#.static/
-#static/
-#bootstrap.min.css
+.static/
+static/
+bootstrap.min.css
 
 htmlcov/
 .coverage
@@ -155,4 +155,4 @@ htmlcov/
 coverage.xml
 *.cover
 
-#media/
+media/

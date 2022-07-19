@@ -11,11 +11,13 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '5_do7h@kvj_s+&y0=kuojt9^@umnh1-fboe=bv#gq2)^2sv+4o'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    'www.dmitriidumchev.pythonanywhere.com',
-    'dmitriidumchev.pythonanywhere.com',
+    'localhost',
+    '127.0.0.1',
+    '[::1]',
+    'testserver',
 ]
 
 
