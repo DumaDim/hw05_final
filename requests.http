@@ -9,4 +9,4 @@ Content-Type: application/json
     "title": "My Title",
     "body": "My text",
     "userId": 1
-} 
+}
